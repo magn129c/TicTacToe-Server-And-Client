@@ -7,7 +7,7 @@ Client player2;
 String player1IP;
 String player2IP;
 
-int port = 80085;
+int port = 5100;
 
 void setup() {
   size(200, 200);
