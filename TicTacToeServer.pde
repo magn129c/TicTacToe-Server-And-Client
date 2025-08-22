@@ -17,17 +17,17 @@ void setup() {
 void draw() {
   player1 = ticTacToeServer.available();
   if(player1 != null) {
-    String player1IP = player1.readString();
-    if(player1IP != null) {
-      println("P1 ip: " + player1IP);
+    String player1ID = player1.readString();
+    if(player1ID != null) {
+      println("P1 ID: " + player1IP);
     }
   }
   
   player2 = ticTacToeServer.available();
   if(player2 != null) {
-    String player2IP = player2.readString();
-    if(player2IP != null) {
-      println("P2 ip: " + player2IP);
+    String player2ID = player2.readString();
+    if(player2ID != null) {
+      println("P2 ID: " + player2IP);
     }
   } 
 }
