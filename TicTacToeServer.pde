@@ -53,7 +53,7 @@ void draw() {
 
 void startGame() {
  
-  board = "000000000";
+  board = "1000000000"; // Spliiter først mellem de 2 første characters, derfor er der bare et 1-tal
   int random = (int) random(0, 2);
   
   playerTurn = random;
