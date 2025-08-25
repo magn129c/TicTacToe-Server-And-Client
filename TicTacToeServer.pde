@@ -16,22 +16,23 @@ void setup() {
 
 void draw() {
 
-  player1 = ticTacToeServer.available();
-  if (player1 != null) {
-    String player1ID = player1.readString();
-    if (player1ID != null) {
-      println("P1 ID: " + player1ID);
+  if (player1 == null) {
+    player1 = ticTacToeServer.available();
+    if (player1 != null) {
+      String player1ID = player1.readString();
+      if (player1ID != null) {
+        println("P1 ID: " + player1ID);
+      }
     }
-  }
-  
-  player2 = ticTacToeServer.available();
-  if (player2 != null) {
-    String player2ID = player2.readString();
-    if (player2ID != null) {
-      println("P2 ID: " + player2ID);
+  } else if (player1 != null && player2 == null) {
+    player2 = ticTacToeServer.available();
+    if (player2 != null) {
+      String player2ID = player2.readString();
+      if (player2ID != null) {
+        println("P2 ID: " + player2ID);
+      }
     }
+  } else {
+    return;
   }
-  
-  
-  
 }
