@@ -1,14 +1,19 @@
 import processing.net.*;
 int playerTurn;
-String board;
-String board1[];
+String[] boardID;
+int playerNumber;
+int fieldHeight;
+int fieldWidth;
+char[][] board = new char[3][3];
 Client myClient;
 String playerID = str((int)(random(1, 5000000)));
 
 
 void setup() {
   size(600, 600);
-
+  initBoard();
+  fieldHeight=height/3;
+  fieldWidth=width/3;
   myClient = new Client(this, "10.202.144.163", 5100);
   myClient.write(playerID);
 
@@ -18,15 +23,22 @@ void draw() {
   background(200);
   drawBoard();
   playerTurn=myClient.read();
-  board=myClient.readString();
-  
+  String tempBoardID=myClient.readString();
+  String gottenPlayerID;
+
   if (playerTurn==1||playerTurn==0) {
     println(playerTurn);
   }
-  
-  if (board!=null && board.contains(playerID)) {
-   // board1=board.split(" ");
-    println(board);
+
+  if (tempBoardID!=null && tempBoardID.contains(playerID)) {
+    String[] tempBoard=tempBoardID.split(" ");
+    tempBoardID = tempBoard[0];
+    gottenPlayerID = tempBoard[1];
+    playerNumber = Integer.valueOf(tempBoard[2]);
+    boardID = tempBoardID.split("");
+
+    printArray(boardID);
+
     //println(board1[2]);
   }
 }
@@ -38,4 +50,38 @@ void drawBoard() {
   line(400, 600, 400, 0);
   line(600, 200, 0, 200);
   line(600, 400, 0, 400);
+}
+
+
+void fillBoard() {
+  for (int i=0; i<3; i++) {
+    for (int j=0; j<3; j++) {
+    }
+  }
+}
+
+/*
+void mouseReleased() {
+ int tempX=mouseX/fieldWidth;
+ println(tempX);
+ 
+ int tempY=mouseY/fieldHeight;
+ println(tempY);
+ if (board[tempX][tempY]==' ') {
+ if (playerTurn) {
+ board[tempX][tempY]='X';
+ } else {
+ board[tempX][tempY]='O';
+ }
+ playerTurn=!playerTurn;
+ }
+ }
+ 
+ */
+void initBoard() {
+  for (int i=0; i<3; i++) {
+    for (int j=0; j<3; j++) {
+      board[i][j]=' ';
+    }
+  }
 }
