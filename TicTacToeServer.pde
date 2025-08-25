@@ -9,17 +9,20 @@ String player2ID;
 
 int port = 5100;
 
+String board;
+boolean duringGame = false;
+int playerTurn;
+
 void setup() {
   size(200, 200);
   ticTacToeServer = new Server(this, port);
 }
 
 void draw() {
-
   if (player1 == null) {
     player1 = ticTacToeServer.available();
     if (player1 != null) {
-      String player1ID = player1.readString();
+      player1ID = player1.readString();
       if (player1ID != null) {
         println("P1 ID: " + player1ID);
       }
@@ -27,12 +30,33 @@ void draw() {
   } else if (player1 != null && player2 == null) {
     player2 = ticTacToeServer.available();
     if (player2 != null) {
-      String player2ID = player2.readString();
+      player2ID = player2.readString();
       if (player2ID != null) {
         println("P2 ID: " + player2ID);
       }
     }
   } else {
-    return;
+    if(!duringGame) {
+      startGame();
+      
+      String player1Board = board + " " + player1ID.toString();
+      String player2Board = board + " " + player2ID.toString();
+      
+      player1.write(playerTurn);
+      player1.write(player1Board);
+      
+      player2.write(playerTurn);
+      player2.write(player2Board);
+    }
   }
+}
+
+void startGame() {
+ 
+  board = "000000000";
+  int random = (int) random(0, 2);
+  
+  playerTurn = random;
+  
+  duringGame = true;
 }
