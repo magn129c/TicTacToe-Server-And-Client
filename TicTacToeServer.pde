@@ -39,8 +39,8 @@ void draw() {
     if(!duringGame) {
       startGame();
       
-      String player1Board = board + " " + player1ID.toString();
-      String player2Board = board + " " + player2ID.toString();
+      String player1Board = board + " " + player1ID.toString() + " 1";
+      String player2Board = board + " " + player2ID.toString() + " 2";
       
       player1.write(playerTurn);
       player1.write(player1Board);
@@ -57,6 +57,5 @@ void startGame() {
   int random = (int) random(0, 2);
   
   playerTurn = random;
-  
   duringGame = true;
 }
