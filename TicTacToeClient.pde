@@ -55,11 +55,17 @@ void convertArray() {
     boardID = tempBoardID.split("");
     for (int i=0; i<9; i++) {
       int j=0;
-      println(i-j*3);
-      board[i-j*3][j]=boardID[i];
+      int k=0;
+      board[k][j]=boardID[i];
       if (i==2||i==5) {
         j++;
         
+      }
+      if(i==2||i==5){
+      k=0;
+      }
+      else {
+      k++;
       }
     }
   }
@@ -78,7 +84,7 @@ void fillBoard() {
   //printArray(boardID);
 
 
-  if (board!=null) {
+  if (board!=null) { //<>//
     for (int i=0; i<3; i++) {
 
       for (int j=0; j<3; j++) {
