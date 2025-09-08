@@ -1,4 +1,4 @@
-import processing.net.*;
+import processing.net.*; //<>//
 
 int playerTurn;
 String[] boardID;
@@ -17,7 +17,7 @@ void setup() {
   fieldWidth=width/3;
   textSize(50);
   fill(1);
-  
+
   myClient = new Client(this, "10.202.144.163", 5100);
   myClient.write(playerID);
 
@@ -27,16 +27,16 @@ void draw() {
   background(200);
   getServerData();
   drawBoard();
+  println(playerTurn+ "turn");
+  println(playerNumber+"number");
 
   if (board != null) {
     fillBoard();
   }
-  //playerTurn=myClient.read();
+
 
   if (playerTurn==1||playerTurn==0) {
-    //println(playerTurn);
   }
-  
 }
 
 void getServerData() {
@@ -44,28 +44,26 @@ void getServerData() {
   String tempBoardID=myClient.readString();
 
   if (tempBoardID!=null && tempBoardID.contains(playerID)) {
-  String[] tempBoard=tempBoardID.split(" ");
-  tempBoardID = tempBoard[0];
-  gottenPlayerID = tempBoard[1];
-  playerNumber = Integer.valueOf(tempBoard[2]);
-  boardID = tempBoardID.split("");
-  
-  convertArray(tempBoard[0]);
+    String[] tempBoard=tempBoardID.split(" ");
+    tempBoardID = tempBoard[0];
+    gottenPlayerID = tempBoard[1];
+    playerNumber = Integer.valueOf(tempBoard[2]);
+    playerTurn = Integer.valueOf(tempBoard[3]);
+    boardID = tempBoardID.split("");
+
+    convertArray(tempBoard[0]);
   }
 }
 
 
-void convertArray(String str){
-    int index = 0; // holder styr på pos i 1D array
+void convertArray(String str) {
+  int index = 0; // holder styr på pos i 1D array
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
       board[i][j] = str.charAt(index);
       index++;
     }
   }
-
-
-
 }
 
 
@@ -80,17 +78,16 @@ void drawBoard() {
 
 
 void fillBoard() {
-  printArray(boardID);
 
-  if (board!=null) { 
+
+  if (board!=null) {
     for (int i=0; i<3; i++) {
       for (int j=0; j<3; j++) {
-        println("i: "+i+" j: "+j+" [i][j]= "+ board[i][j]);
-        
+
         //println(i + j * 3);
         //println(boardID[(i + j * 3)]);
-        if(board[i][j]=='\u0000') {
-        }else if (board[i][j]==('1')) {
+        if (board[i][j]=='\u0000') {
+        } else if (board[i][j]==('1')) {
           text("X", fieldWidth/2+fieldWidth*i-textOffset, fieldHeight/2+fieldHeight*j);
         } else if (board[i][j]==('2')) {
           text("O", fieldWidth/2+fieldWidth*i-textOffset, fieldHeight/2+fieldHeight*j);
@@ -100,21 +97,19 @@ void fillBoard() {
   }
 }
 
-/*
 void mouseReleased() {
- int tempX=mouseX/fieldWidth;
- println(tempX);
- 
- int tempY=mouseY/fieldHeight;
- println(tempY);
- if (board[tempX][tempY]==' ') {
- if (playerTurn) {
- board[tempX][tempY]='X';
- } else {
- board[tempX][tempY]='O';
- }
- playerTurn=!playerTurn;
- }
- }
- 
- */
+  int tempX=mouseX/fieldWidth;
+  println(tempX);
+
+  int tempY=mouseY/fieldHeight;
+  println(tempY);
+  if (board[tempX][tempY]==' ') {
+    if (playerTurn==0) {
+      board[tempX][tempY]='X';
+      playerTurn=1;
+    } else {
+      board[tempX][tempY]='O';
+      playerTurn=0;
+    }
+  }
+}
