@@ -38,15 +38,27 @@ void draw() {
   } else {
     if(!duringGame) {
       startGame();
-      
-      String player1Board = board + " " + player1ID.toString() + " 1";
-      String player2Board = board + " " + player2ID.toString() + " 2";
-      
-      player1.write(playerTurn);
+      //              X  XOO   Tilfældig ID Spiller ID Nuværende Tur
+      // Eksempelvis: 100122000  838582         1             2
+      String player1Board = board + " " + player1ID.toString() + " 1" + " " + playerTurn;
+      String player2Board = board + " " + player2ID.toString() + " 2" + " " + playerTurn;
       player1.write(player1Board);
-      
-      player2.write(playerTurn);
       player2.write(player2Board);
+    } else {
+      Client clientData = ticTacToeServer.available();
+      if(clientData != null) {
+        String move = clientData.readString();
+        println(move);
+        if(move != null) {
+          String[] splitMove = move.split(" ");
+          if(playerTurn == 1 && splitMove[1] == player1ID) {
+            playerTurn = 2;
+          } else if(playerTurn == 2 && splitMove[1] == player2ID) {
+            playerTurn = 1;
+            
+          }
+        }
+      }
     }
   }
 }
@@ -54,7 +66,7 @@ void draw() {
 void startGame() {
  
   board = "000000000";
-  int random = (int) random(0, 2);
+  int random = (int) (Math.random() * 2 + 1);;
   
   playerTurn = random;
   duringGame = true;
