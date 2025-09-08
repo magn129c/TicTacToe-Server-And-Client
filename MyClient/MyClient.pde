@@ -1,5 +1,4 @@
 import processing.net.*; //<>//
-
 int playerTurn;
 String[] boardID;
 int playerNumber;
@@ -18,10 +17,8 @@ void setup() {
   textSize(50);
   fill(1);
 
-  myClient = new Client(this, "10.202.144.163", 5100);
-  myClient.write(playerID);
-
-  //println(playerID);
+  myClient = new Client(this, "127.0.0.1", 5100); //laver en client som forbindes til serverens IP og Port
+  myClient.write(playerID); //skirver PlayerID til severen
 }
 void draw() {
   background(200);
@@ -31,23 +28,16 @@ void draw() {
   if (board != null) {
     fillBoard();
   }
-
-
-  if (playerTurn==1||playerTurn==0) {
-  }
 }
 
 void getServerData() {
-  String gottenPlayerID;
-  String tempBoardID=myClient.readString();
-
+  String tempBoardID=myClient.readString();//indlæser boardID fra serveren
   if (tempBoardID!=null && tempBoardID.contains(playerID)) {
-    String[] tempBoard=tempBoardID.split(" ");
-    tempBoardID = tempBoard[0];
-    gottenPlayerID = tempBoard[1];
-    playerNumber = Integer.valueOf(tempBoard[2]);
-    playerTurn = Integer.valueOf(tempBoard[3]);
-    boardID = tempBoardID.split("");
+    String[] tempBoard=tempBoardID.split(" ");//opdeler tempBoard op ved mellemrum
+    tempBoardID = tempBoard[0];//boardID er den første del som severen har sendt
+    playerNumber = Integer.valueOf(tempBoard[2]);// playernumber er 3. del som er sendt
+    playerTurn = Integer.valueOf(tempBoard[3]);//playerturn er 4. del som er sendt
+    boardID = tempBoardID.split(""); //deler BoardID op så tallene står enkeltvis
 
     convertArray(tempBoard[0]);
   }
@@ -135,7 +125,6 @@ void mouseReleased() {
     play="8"+" "+playerID;
     println("8"+" "+playerID);
   }
-  
+
   myClient.write(play);
-  
 }
