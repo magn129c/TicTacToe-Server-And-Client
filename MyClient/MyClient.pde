@@ -27,8 +27,6 @@ void draw() {
   background(200);
   getServerData();
   drawBoard();
-  println(playerTurn+ "turn");
-  println(playerNumber+"number");
 
   if (board != null) {
     fillBoard();
@@ -99,17 +97,45 @@ void fillBoard() {
 
 void mouseReleased() {
   int tempX=mouseX/fieldWidth;
-  println(tempX);
-
   int tempY=mouseY/fieldHeight;
-  println(tempY);
-  if (board[tempX][tempY]==' ') {
-    if (playerTurn==0) {
-      board[tempX][tempY]='X';
-      playerTurn=1;
-    } else {
-      board[tempX][tempY]='O';
-      playerTurn=0;
-    }
+  String play="fejl";
+  if (tempX==0 && tempY==0) {
+    play="0"+" "+playerID;
+    println("0"+" "+playerID);
   }
+  if (tempX==0 && tempY==1) {
+    play="1"+" "+playerID;
+    println("1"+" "+playerID);
+  }
+  if (tempX==0 && tempY==2) {
+    play="2"+" "+playerID;
+    println("2"+" "+playerID);
+  }
+  if (tempX==1 && tempY==0) {
+    play="3"+" "+playerID;
+    println("3"+" "+playerID);
+  }
+  if (tempX==1 && tempY==1) {
+    play="4"+" "+playerID;
+    println("4"+" "+playerID);
+  }
+  if (tempX==1 && tempY==2) {
+    play="5"+" "+playerID;
+    println("5"+" "+playerID);
+  }
+  if (tempX==2 && tempY==0) {
+    play="6"+" "+playerID;
+    println("6"+" "+playerID);
+  }
+  if (tempX==2 && tempY==1) {
+    play="7"+" "+playerID;
+    println("7"+" "+playerID);
+  }
+  if (tempX==2 && tempY==2) {
+    play="8"+" "+playerID;
+    println("8"+" "+playerID);
+  }
+  
+  myClient.write(play);
+  
 }
